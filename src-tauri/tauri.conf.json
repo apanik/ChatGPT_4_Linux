@@ -1,0 +1,71 @@
+{
+  "package": {
+    "productName": "Codex ChatGPT Client",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "open": true
+      },
+      "dialog": {
+        "open": true,
+        "save": true
+      },
+      "notification": {
+        "all": true
+      },
+      "globalShortcut": {
+        "all": true
+      },
+      "window": {
+        "all": true
+      },
+      "fs": {
+        "scope": ["**"]
+      },
+      "clipboard": {
+        "all": true
+      }
+    },
+    "bundle": {
+      "identifier": "com.codex.chatgpt.client",
+      "icons": [],
+      "linux": {
+        "appimage": {
+          "bundleMediaFramework": true
+        },
+        "deb": {
+          "files": {}
+        },
+        "rpm": {
+          "files": {}
+        },
+        "files": []
+      }
+    },
+    "windows": [
+      {
+        "label": "main",
+        "url": "https://chatgpt.com",
+        "fullscreen": false,
+        "resizable": true,
+        "title": "ChatGPT",
+        "width": 1200,
+        "height": 800
+      }
+    ],
+    "security": {
+      "dangerousRemoteDomainIpcAccess": [
+        "https://chatgpt.com"
+      ]
+    }
+  },
+  "build": {
+    "beforeBuildCommand": "",
+    "beforeDevCommand": "",
+    "devPath": "src",
+    "distDir": "src"
+  }
+}
