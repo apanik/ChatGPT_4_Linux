@@ -196,4 +196,54 @@ mod tests {
         assert_eq!(reloaded.hotkey.accelerator, "Ctrl+Shift+Space");
         assert!(!reloaded.preferences.notifications_enabled);
     }
+
+    #[test]
+    fn update_all_features_and_clear() {
+        let dir = tempdir().unwrap();
+        let path = dir.path().join("settings.json");
+        let manager = SettingsManager::from_path(path.clone()).unwrap();
+
+        manager
+            .update(|s| {
+                s.hotkey.accelerator = "Ctrl+Alt+M".into();
+                s.companion.window.width = 520.0;
+                s.companion.window.height = 640.0;
+                s.companion.window.position = Some(WindowPosition { x: 10.0, y: 20.0 });
+                s.companion.window.always_on_top = false;
+                s.companion.window.opacity = 0.85;
+                s.companion.remember_position = false;
+                s.preferences.open_links_in_browser = false;
+                s.preferences.notifications_enabled = false;
+                s.preferences.launch_at_login = true;
+                s.preferences.allow_voice = false;
+            })
+            .unwrap();
+
+        let manager2 = SettingsManager::from_path(path.clone()).unwrap();
+        let updated = manager2.get();
+        assert_eq!(updated.hotkey.accelerator, "Ctrl+Alt+M");
+        assert_eq!(updated.companion.window.width, 520.0);
+        assert_eq!(updated.companion.window.height, 640.0);
+        assert_eq!(updated.companion.window.position.unwrap().x, 10.0);
+        assert!(!updated.companion.window.always_on_top);
+        assert_eq!(updated.companion.window.opacity, 0.85);
+        assert!(!updated.companion.remember_position);
+        assert!(!updated.preferences.open_links_in_browser);
+        assert!(!updated.preferences.notifications_enabled);
+        assert!(updated.preferences.launch_at_login);
+        assert!(!updated.preferences.allow_voice);
+
+        let manager3 = SettingsManager::from_path(path).unwrap();
+        reset_companion_position(&manager3).unwrap();
+        assert!(manager3.get().companion.window.position.is_none());
+
+        manager3.clear().unwrap();
+        let cleared = manager3.get();
+        assert_eq!(cleared.hotkey.accelerator, "Alt+Space");
+        assert!(cleared.preferences.open_links_in_browser);
+        assert!(cleared.preferences.notifications_enabled);
+        assert!(!cleared.preferences.launch_at_login);
+        assert!(cleared.preferences.allow_voice);
+        assert!(cleared.companion.remember_position);
+    }
 }

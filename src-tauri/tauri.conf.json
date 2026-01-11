@@ -31,18 +31,15 @@
     },
     "bundle": {
       "identifier": "com.codex.chatgpt.client",
-      "icons": [],
-      "linux": {
-        "appimage": {
-          "bundleMediaFramework": true
-        },
-        "deb": {
-          "files": {}
-        },
-        "rpm": {
-          "files": {}
-        },
-        "files": []
+      "icon": [],
+      "appimage": {
+        "bundleMediaFramework": true
+      },
+      "deb": {
+        "files": {}
+      },
+      "rpm": {
+        "files": {}
       }
     },
     "windows": [
@@ -58,7 +55,12 @@
     ],
     "security": {
       "dangerousRemoteDomainIpcAccess": [
-        "https://chatgpt.com"
+        {
+          "scheme": "https",
+          "domain": "chatgpt.com",
+          "windows": ["main", "companion"],
+          "enableTauriAPI": true
+        }
       ]
     }
   },

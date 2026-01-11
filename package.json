@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "tauri": "tauri",
-    "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build"
+    "tauri": "PATH=\"$HOME/.cargo/bin:$PATH\" CARGO=\"$HOME/.cargo/bin/cargo\" npx @tauri-apps/cli",
+    "tauri:dev": "PATH=\"$HOME/.cargo/bin:$PATH\" CARGO=\"$HOME/.cargo/bin/cargo\" npx @tauri-apps/cli dev",
+    "tauri:build": "PATH=\"$HOME/.cargo/bin:$PATH\" CARGO=\"$HOME/.cargo/bin/cargo\" npx @tauri-apps/cli build"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.6"
